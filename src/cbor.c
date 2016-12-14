@@ -359,7 +359,8 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 	};
 	case CBOR_TYPE_TAG: {
 		fprintf(out, "%*s[CBOR_TYPE_TAG] ", indent, " ");
-		fprintf(out, "Value: %"PRIuPTR"\n", cbor_tag_value(item));
+		//fprintf(out, "Value: %"PRIuPTR"\n", cbor_tag_value(item));
+		fprintf(out, "Value: %llu\n", cbor_tag_value(item));
 		_cbor_nested_describe(cbor_tag_item(item), out, indent + 4);
 		break;
 	};
