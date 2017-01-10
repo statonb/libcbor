@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -9,9 +9,9 @@
 #include "cbor/internal/builder_callbacks.h"
 #include "cbor/internal/loaders.h"
 
-cbor_item_t *cbor_load(cbor_data source,
-					   size_t source_size,
-					   struct cbor_load_result *result)
+cbor_item_t * cbor_load(cbor_data source,
+						size_t source_size,
+						struct cbor_load_result *result)
 {
 	/* Context stack */
 	static struct cbor_callbacks callbacks = {
@@ -242,7 +242,7 @@ cbor_item_t * cbor_copy(cbor_item_t * item)
 #include <inttypes.h>
 #include <wchar.h>
 #include <locale.h>
-#include <unistd.h>
+#include <stdlib.h>
 
 #define __STDC_FORMAT_MACROS
 
@@ -274,7 +274,7 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 		fprintf(out, "%*s[CBOR_TYPE_BYTESTRING] ", indent, " ");
 		if (cbor_bytestring_is_indefinite(item)) {
 			fprintf(out,
-					"Indefinite, with %"PRIuPTR" chunks:\n",
+					"Indefinite, with %zu chunks:\n",
 					cbor_bytestring_chunk_count(item));
 			for (size_t i = 0; i < cbor_bytestring_chunk_count(item); i++)
 				_cbor_nested_describe(
@@ -283,7 +283,7 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 					indent + 4);
 		} else {
 			fprintf(out,
-					"Definite, length %"PRIuPTR"B\n",
+					"Definite, length %zuB\n",
 					cbor_bytestring_length(item));
 		}
 		break;
@@ -292,7 +292,7 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 		fprintf(out, "%*s[CBOR_TYPE_STRING] ", indent, " ");
 		if (cbor_string_is_indefinite(item)) {
 			fprintf(out,
-					"Indefinite, with %"PRIuPTR" chunks:\n",
+					"Indefinite, with %zu chunks:\n",
 					cbor_string_chunk_count(item));
 			for (size_t i = 0; i < cbor_string_chunk_count(item); i++)
 				_cbor_nested_describe(
@@ -301,7 +301,7 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 					indent + 4);
 		} else {
 			fprintf(out,
-					"Definite, length %"PRIuPTR"B, %"PRIuPTR" codepoints\n",
+					"Definite, length %zuB, %zu codepoints\n",
 					cbor_string_length(item),
 					cbor_string_codepoint_count(item));
 			/* Careful - this doesn't support multibyte characters! */
@@ -318,11 +318,11 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 		fprintf(out, "%*s[CBOR_TYPE_ARRAY] ", indent, " ");
 		if (cbor_array_is_definite(item)) {
 			fprintf(out,
-					"Definite, size: %"PRIuPTR"\n",
+					"Definite, size: %zu\n",
 					cbor_array_size(item));
 		} else {
 			fprintf(out,
-					"Indefinite, size:  %"PRIuPTR"\n",
+					"Indefinite, size:  %zu\n",
 					cbor_array_size(item));
 		}
 
@@ -337,11 +337,11 @@ static void _cbor_nested_describe(cbor_item_t *item, FILE *out, int indent)
 		fprintf(out, "%*s[CBOR_TYPE_MAP] ", indent, " ");
 		if (cbor_map_is_definite(item)) {
 			fprintf(out,
-					"Definite, size: %"PRIuPTR"\n",
+					"Definite, size: %zu\n",
 					cbor_map_size(item));
 		} else {
 			fprintf(out,
-					"Indefinite, size:  %"PRIuPTR"\n",
+					"Indefinite, size:  %zu\n",
 					cbor_map_size(item));
 		}
 

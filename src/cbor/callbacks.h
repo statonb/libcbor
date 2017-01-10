@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -90,9 +90,9 @@ struct cbor_callbacks {
 	/** Half float */
 	cbor_float_callback float2;
 	/** Single float */
-	cbor_double_callback float8;
-	/** Double float */
 	cbor_float_callback float4;
+	/** Double float */
+	cbor_double_callback float8;
 	/** Undef */
 	cbor_simple_callback undefined;
 	/** Null */

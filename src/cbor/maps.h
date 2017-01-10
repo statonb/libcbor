@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -39,7 +39,7 @@ size_t cbor_map_allocated(const cbor_item_t *item);
  * @param size The number of slots to preallocate
  * @return **new** definite map. `NULL` on malloc failure.
  */
-cbor_item_t *cbor_new_definite_map(const size_t size);
+cbor_item_t *cbor_new_definite_map(size_t size);
 
 /** Create a new indefinite map
  *

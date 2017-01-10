@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -289,20 +289,20 @@ static void test_inline_creation(void **state)
 
 int main(void)
 {
-	const UnitTest tests[] = {
-		unit_test(test_empty_bs),
-		unit_test(test_embedded_bs),
-		unit_test(test_notenough_data),
-		unit_test(test_short_bs1),
-		unit_test(test_short_bs2),
-		unit_test(test_half_bs),
-		unit_test(test_int_bs),
-		unit_test(test_long_bs),
-		unit_test(test_zero_indef),
-		unit_test(test_short_indef),
-		unit_test(test_two_indef),
-		unit_test(test_missing_indef),
-		unit_test(test_inline_creation)
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_empty_bs),
+		cmocka_unit_test(test_embedded_bs),
+		cmocka_unit_test(test_notenough_data),
+		cmocka_unit_test(test_short_bs1),
+		cmocka_unit_test(test_short_bs2),
+		cmocka_unit_test(test_half_bs),
+		cmocka_unit_test(test_int_bs),
+		cmocka_unit_test(test_long_bs),
+		cmocka_unit_test(test_zero_indef),
+		cmocka_unit_test(test_short_indef),
+		cmocka_unit_test(test_two_indef),
+		cmocka_unit_test(test_missing_indef),
+		cmocka_unit_test(test_inline_creation)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

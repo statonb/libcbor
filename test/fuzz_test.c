@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -94,8 +94,8 @@ int main(int argc, char * argv[])
 	else
 		seed = (unsigned) time(NULL);
 
-	const UnitTest tests[] = {
-		unit_test(fuzz)
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(fuzz)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

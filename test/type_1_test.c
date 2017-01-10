@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -102,12 +102,12 @@ static void test_long_int(void **state)
 
 int main(void)
 {
-	const UnitTest tests[] = {
-		unit_test(test_very_short_int),
-		unit_test(test_short_int),
-		unit_test(test_half_int),
-		unit_test(test_int),
-		unit_test(test_long_int)
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_very_short_int),
+		cmocka_unit_test(test_short_int),
+		cmocka_unit_test(test_half_int),
+		cmocka_unit_test(test_int),
+		cmocka_unit_test(test_long_int)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

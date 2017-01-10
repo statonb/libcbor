@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -56,7 +56,8 @@ static void test_float8(void **state)
 	assert_true(cbor_isa_float_ctrl(float_ctrl));
 	assert_true(cbor_is_float(float_ctrl));
 	assert_true(cbor_float_get_width(float_ctrl) == CBOR_FLOAT_64);
-	assert_true(cbor_float_get_float8(float_ctrl) == 1.0e+300);
+	// XXX: the cast prevents promotion to 80-bit floats on 32-bit x86
+	assert_true(cbor_float_get_float8(float_ctrl) == (double) 1.0e+300);
 	cbor_decref(&float_ctrl);
 	assert_null(float_ctrl);
 }
@@ -104,13 +105,13 @@ static void test_bool(void **state)
 
 int main(void)
 {
-	const UnitTest tests[] = {
-		unit_test(test_float2),
-		unit_test(test_float4),
-		unit_test(test_float8),
-		unit_test(test_null),
-		unit_test(test_undef),
-		unit_test(test_bool)
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_float2),
+		cmocka_unit_test(test_float4),
+		cmocka_unit_test(test_float8),
+		cmocka_unit_test(test_null),
+		cmocka_unit_test(test_undef),
+		cmocka_unit_test(test_bool)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

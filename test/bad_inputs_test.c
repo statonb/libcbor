@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -78,7 +78,8 @@ static void test_6(void **state)
 	assert_int_equal(res.error.position, 2);
 }
 
-/* Extremely high size value (overflows size_t in representation size) */
+#ifdef EIGHT_BYTE_SIZE_T
+/* Extremely high size value (overflows size_t in representation size). Only works with 64b sizes */
 unsigned char data7[] = {0xA2, 0x9B, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static void test_7(void **state)
 {
@@ -87,20 +88,23 @@ static void test_7(void **state)
 	assert_true(res.error.code == CBOR_ERR_MEMERROR);
 	assert_int_equal(res.error.position, 10);
 }
+#endif
 
 
 int main(void)
 {
-	const UnitTest tests[] = {
-		unit_test(test_1),
-		unit_test(test_2),
-		unit_test(test_3),
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_1),
+		cmocka_unit_test(test_2),
+		cmocka_unit_test(test_3),
 #ifdef SANE_MALLOC
-		unit_test(test_4),
-		unit_test(test_5),
+		cmocka_unit_test(test_4),
+		cmocka_unit_test(test_5),
 #endif
-		unit_test(test_6),
-		unit_test(test_7),
+		cmocka_unit_test(test_6),
+#ifdef EIGHT_BYTE_SIZE_T
+		cmocka_unit_test(test_7),
+#endif
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

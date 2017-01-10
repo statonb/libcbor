@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -184,6 +184,7 @@ static void test_bstring_int32_decoding(void **state)
 	);
 }
 
+#ifdef EIGHT_BYTE_SIZE_T
 unsigned char bstring_int64_data[] = { 0x5B, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 /*, [4294967296 bytes] */ };
 static void test_bstring_int64_decoding(void **state)
 {
@@ -192,7 +193,7 @@ static void test_bstring_int64_decoding(void **state)
 		decode(bstring_int64_data, 9 + 4294967296)
 	);
 }
-
+#endif
 
 unsigned char bstring_indef_1_data[] = { 0x5F, 0x40 /* Empty byte string */, 0xFF };
 static void test_bstring_indef_decoding_1(void **state)
@@ -629,58 +630,60 @@ static void test_undef_decoding(void **state)
 int main(void)
 {
 	set_decoder(&cbor_stream_decode);
-	const UnitTest tests[] = {
-		unit_test(test_uint8_embedded_decoding),
-		unit_test(test_uint8_decoding),
-		unit_test(test_uint16_decoding),
-		unit_test(test_uint32_decoding),
-		unit_test(test_uint64_decoding),
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_uint8_embedded_decoding),
+		cmocka_unit_test(test_uint8_decoding),
+		cmocka_unit_test(test_uint16_decoding),
+		cmocka_unit_test(test_uint32_decoding),
+		cmocka_unit_test(test_uint64_decoding),
 
-		unit_test(test_negint8_embedded_decoding),
-		unit_test(test_negint8_decoding),
-		unit_test(test_negint16_decoding),
-		unit_test(test_negint32_decoding),
-		unit_test(test_negint64_decoding),
+		cmocka_unit_test(test_negint8_embedded_decoding),
+		cmocka_unit_test(test_negint8_decoding),
+		cmocka_unit_test(test_negint16_decoding),
+		cmocka_unit_test(test_negint32_decoding),
+		cmocka_unit_test(test_negint64_decoding),
 
-		unit_test(test_bstring_embedded_int8_decoding),
-		unit_test(test_bstring_int8_decoding),
-		unit_test(test_bstring_int16_decoding),
-		unit_test(test_bstring_int32_decoding),
-		unit_test(test_bstring_int64_decoding),
-		unit_test(test_bstring_indef_decoding_1),
-		unit_test(test_bstring_indef_decoding_2),
-		unit_test(test_bstring_indef_decoding_3),
+		cmocka_unit_test(test_bstring_embedded_int8_decoding),
+		cmocka_unit_test(test_bstring_int8_decoding),
+		cmocka_unit_test(test_bstring_int16_decoding),
+		cmocka_unit_test(test_bstring_int32_decoding),
+#ifdef EIGHT_BYTE_SIZE_T
+		cmocka_unit_test(test_bstring_int64_decoding),
+#endif
+		cmocka_unit_test(test_bstring_indef_decoding_1),
+		cmocka_unit_test(test_bstring_indef_decoding_2),
+		cmocka_unit_test(test_bstring_indef_decoding_3),
 
-		unit_test(test_array_embedded_int8_decoding),
-		unit_test(test_array_int8_decoding),
-		unit_test(test_array_int16_decoding),
-		unit_test(test_array_int32_decoding),
-		unit_test(test_array_int64_decoding),
-		unit_test(test_array_of_arrays_decoding),
-		unit_test(test_indef_array_decoding_1),
+		cmocka_unit_test(test_array_embedded_int8_decoding),
+		cmocka_unit_test(test_array_int8_decoding),
+		cmocka_unit_test(test_array_int16_decoding),
+		cmocka_unit_test(test_array_int32_decoding),
+		cmocka_unit_test(test_array_int64_decoding),
+		cmocka_unit_test(test_array_of_arrays_decoding),
+		cmocka_unit_test(test_indef_array_decoding_1),
 
-		unit_test(test_map_embedded_int8_decoding),
-		unit_test(test_map_int8_decoding),
-		unit_test(test_map_int16_decoding),
-		unit_test(test_map_int32_decoding),
-		unit_test(test_map_int64_decoding),
-		unit_test(test_indef_map_decoding_1),
+		cmocka_unit_test(test_map_embedded_int8_decoding),
+		cmocka_unit_test(test_map_int8_decoding),
+		cmocka_unit_test(test_map_int16_decoding),
+		cmocka_unit_test(test_map_int32_decoding),
+		cmocka_unit_test(test_map_int64_decoding),
+		cmocka_unit_test(test_indef_map_decoding_1),
 
-		unit_test(test_embedded_tag_decoding),
-		unit_test(test_int8_tag_decoding),
-		unit_test(test_int16_tag_decoding),
-		unit_test(test_int32_tag_decoding),
-		unit_test(test_int64_tag_decoding),
-		unit_test(test_bad_tag_decoding),
+		cmocka_unit_test(test_embedded_tag_decoding),
+		cmocka_unit_test(test_int8_tag_decoding),
+		cmocka_unit_test(test_int16_tag_decoding),
+		cmocka_unit_test(test_int32_tag_decoding),
+		cmocka_unit_test(test_int64_tag_decoding),
+		cmocka_unit_test(test_bad_tag_decoding),
 
-		unit_test(test_float2_decoding),
-		unit_test(test_float4_decoding),
-		unit_test(test_float8_decoding),
+		cmocka_unit_test(test_float2_decoding),
+		cmocka_unit_test(test_float4_decoding),
+		cmocka_unit_test(test_float8_decoding),
 
-		unit_test(test_false_decoding),
-		unit_test(test_true_decoding),
-		unit_test(test_null_decoding),
-		unit_test(test_undef_decoding)
+		cmocka_unit_test(test_false_decoding),
+		cmocka_unit_test(test_true_decoding),
+		cmocka_unit_test(test_null_decoding),
+		cmocka_unit_test(test_undef_decoding)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

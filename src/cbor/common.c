@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -15,71 +15,71 @@
 #include "strings.h"
 #include "tags.h"
 
-inline bool cbor_isa_uint(const cbor_item_t *item)
+bool cbor_isa_uint(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_UINT;
 }
 
-inline bool cbor_isa_negint(const cbor_item_t *item)
+bool cbor_isa_negint(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_NEGINT;
 }
 
-inline bool cbor_isa_bytestring(const cbor_item_t *item)
+bool cbor_isa_bytestring(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_BYTESTRING;
 }
 
-inline bool cbor_isa_string(const cbor_item_t *item)
+bool cbor_isa_string(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_STRING;
 }
 
-inline bool cbor_isa_array(const cbor_item_t *item)
+bool cbor_isa_array(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_ARRAY;
 }
 
-inline bool cbor_isa_map(const cbor_item_t *item)
+bool cbor_isa_map(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_MAP;
 }
 
-inline bool cbor_isa_tag(const cbor_item_t *item)
+bool cbor_isa_tag(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_TAG;
 }
 
-inline bool cbor_isa_float_ctrl(const cbor_item_t *item)
+bool cbor_isa_float_ctrl(const cbor_item_t *item)
 {
 	return item->type == CBOR_TYPE_FLOAT_CTRL;
 }
 
 
-inline cbor_type cbor_typeof(const cbor_item_t *item)
+cbor_type cbor_typeof(const cbor_item_t *item)
 {
 	return item->type;
 }
 
 
-inline bool cbor_is_int(const cbor_item_t *item)
+bool cbor_is_int(const cbor_item_t *item)
 {
 	return cbor_isa_uint(item) || cbor_isa_negint(item);
 }
 
 
-inline bool cbor_is_bool(const cbor_item_t *item)
+bool cbor_is_bool(const cbor_item_t *item)
 {
 	return cbor_isa_float_ctrl(item) &&
 		   (cbor_ctrl_value(item) == CBOR_CTRL_FALSE || cbor_ctrl_value(item) == CBOR_CTRL_TRUE);
 }
 
-inline bool cbor_is_null(const cbor_item_t *item)
+bool cbor_is_null(const cbor_item_t *item)
 {
 	return cbor_isa_float_ctrl(item) && cbor_ctrl_value(item) == CBOR_CTRL_NULL;
 }
 
-inline bool cbor_is_undef(const cbor_item_t *item)
+bool cbor_is_undef(const cbor_item_t *item)
 {
 	return cbor_isa_float_ctrl(item) && cbor_ctrl_value(item) == CBOR_CTRL_UNDEF;
 }

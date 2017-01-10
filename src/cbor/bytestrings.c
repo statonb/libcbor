@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -69,7 +69,7 @@ cbor_item_t *cbor_build_bytestring(cbor_data handle, size_t length)
 	return res;
 }
 
-void cbor_bytestring_set_handle(cbor_item_t *item, unsigned char * restrict data, size_t length)
+void cbor_bytestring_set_handle(cbor_item_t *item, cbor_mutable_data CBOR_RESTRICT_POINTER data, size_t length)
 {
 	assert(cbor_isa_bytestring(item));
 	assert(cbor_bytestring_is_definite(item));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -71,20 +71,20 @@ const struct cbor_callbacks cbor_empty_callbacks = {
 	.negint64 = cbor_null_negint64_callback,
 
 	/* Type 2 - Byte strings */
-	.byte_string = cbor_null_byte_string_callback,
 	.byte_string_start = cbor_null_byte_string_start_callback,
+	.byte_string = cbor_null_byte_string_callback,
 
 	/* Type 3 - Strings */
-	.string = cbor_null_string_callback,
 	.string_start = cbor_null_string_start_callback,
+	.string = cbor_null_string_callback,
 
 	/* Type 4 - Arrays */
-	.array_start = cbor_null_array_start_callback,
 	.indef_array_start = cbor_null_indef_array_start_callback,
+	.array_start = cbor_null_array_start_callback,
 
 	/* Type 5 - Maps */
-	.map_start = cbor_null_map_start_callback,
 	.indef_map_start = cbor_null_indef_map_start_callback,
+	.map_start = cbor_null_map_start_callback,
 
 	/* Type 6 - Tags */
 	.tag = cbor_null_tag_callback,

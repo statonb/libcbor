@@ -58,9 +58,23 @@ set(CPACK_PACKAGE_VERSION_PATCH ${CBOR_VERSION_PATCH})
 
 include(CPack)
 
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -Wall -pedantic -g -ggdb -DDEBUG=true")
-set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -pedantic -DNDEBUG")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+if(MINGW)
+    # https://github.com/PJK/libcbor/issues/13
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
+elseif(NOT MSVC)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+endif()
+
+if(MSVC)
+    # This just doesn't work right -- https://msdn.microsoft.com/en-us/library/5ft82fed.aspx
+    set(CBOR_RESTRICT_SPECIFIER "")
+else()
+    set(CBOR_RESTRICT_SPECIFIER "restrict")
+
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -Wall -pedantic -g -ggdb -DDEBUG=true")
+    set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -pedantic -DNDEBUG")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+endif()
 
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-g")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE " ")
@@ -68,8 +82,10 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE " ")
 
 include(CheckTypeSize)
 check_type_size("size_t" SIZEOF_SIZE_T)
-if (SIZEOF_SIZE_T LESS 8)
+if(SIZEOF_SIZE_T LESS 8)
     message(WARNING "Your size_t is less than 8 bytes. Long items with 64b length specifiers might not work as expected. Make sure to run the tests!")
+else()
+    add_definitions(-DEIGHT_BYTE_SIZE_T)
 endif()
 
 enable_testing()

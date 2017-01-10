@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -194,14 +194,14 @@ static void test_streamed_streamed_kv_map(void **state)
 
 int main(void)
 {
-	const UnitTest tests[] = {
-		unit_test(test_empty_map),
-		unit_test(test_simple_map),
-		unit_test(test_indef_simple_map),
-		unit_test(test_def_nested_map),
-		unit_test(test_streamed_key_map),
-		unit_test(test_streamed_kv_map),
-		unit_test(test_streamed_streamed_kv_map)
+	const struct CMUnitTest tests[] = {
+		cmocka_unit_test(test_empty_map),
+		cmocka_unit_test(test_simple_map),
+		cmocka_unit_test(test_indef_simple_map),
+		cmocka_unit_test(test_def_nested_map),
+		cmocka_unit_test(test_streamed_key_map),
+		cmocka_unit_test(test_streamed_kv_map),
+		cmocka_unit_test(test_streamed_streamed_kv_map)
 	};
-	return run_tests(tests);
+	return cmocka_run_group_tests(tests, NULL, NULL);
 }

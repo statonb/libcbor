@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -86,7 +86,7 @@ cbor_item_t ** cbor_array_handle(const cbor_item_t * item);
  * @param size Number of slots to preallocate
  * @return **new** array or `NULL` upon malloc failure
  */
-cbor_item_t * cbor_new_definite_array(const size_t size);
+cbor_item_t * cbor_new_definite_array(size_t size);
 
 /** Create new indefinite array
  *
