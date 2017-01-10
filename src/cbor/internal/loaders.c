@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Pavel Kalvoda <me@pavelkalvoda.com>
+ * Copyright (c) 2014-2017 Pavel Kalvoda <me@pavelkalvoda.com>
  *
  * libcbor is free software; you can redistribute it and/or modify
  * it under the terms of the MIT license. See LICENSE for details.
@@ -37,7 +37,7 @@ uint32_t _cbor_load_uint32(const unsigned char *source)
 	return be32toh(*(uint32_t *) source);
 #else
 	#ifdef IS_BIG_ENDIAN
-		return *(uint16_t *) source;
+		return *(uint32_t *) source;
 	#else
 		return ((uint32_t) *(source + 0) << 0x18) +
 		       ((uint32_t) *(source + 1) << 0x10) +
