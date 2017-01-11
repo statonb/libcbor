@@ -29,6 +29,8 @@ cbor_item_t * cjson_cbor_load(void *source, cbor_load_callback_t cbor_load_callb
 	static struct cbor_callbacks callbacks = {
 		.uint64 = &cbor_builder_uint64_callback,
 		.negint64 = &cbor_builder_negint64_callback,
+		.uint32 = &cbor_builder_uint32_callback,
+		.negint32 = &cbor_builder_negint32_callback,
 		.string = &cbor_builder_string_callback,
 		.array_start = &cbor_builder_array_start_callback,
 		.map_start = &cbor_builder_map_start_callback,
@@ -80,7 +82,7 @@ void cjson_cbor_stream_decode(cJSON * source,
 				if (source->valueint >= 0) {
 					callbacks->uint64(context, source->valueint);
 				} else {
-					callbacks->negint64(context, source->valueint + 1);
+					callbacks->negint64(context, -(source->valueint) - 1);
 				}
 			}
 			return;

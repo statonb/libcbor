@@ -73,7 +73,13 @@ else()
 
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -Wall -pedantic -g -ggdb -DDEBUG=true")
     set(CMAKE_C_FLAGS_RELEASE "-O3 -Wall -pedantic -DNDEBUG")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -I/usr/local/include")
+endif()
+
+option(ARM "ARM Cross Compile" OFF)
+if(ARM)
+	set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -L/home/impreza/Workspace/cJSON/build_arm")
+	set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -L/home/impreza/Workspace/cJSON/build_arm")
 endif()
 
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-g")
